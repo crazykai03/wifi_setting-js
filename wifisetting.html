@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
+    
+
+  <title>wifi Setting</title>
+  <link rel="stylesheet" type="text/css" href="led.css">
+</head>
+<body style="background-color:grey;">
+<!-- partial:index.partial.html -->
+
+  
+    <h1>Wifi Setting</h1>
+    
+      <form>
+      <label>SSID:</label>
+      <input name='ssid' id="ssid" length=32 placeholder="SSID" pattern=".{8,}" required>
+      <label>PASSWORD: </label>
+      <input name='pass' id="pass" length=64 placeholder="Password" pattern=".{8,}" required>
+      
+      <button onclick="send_wifi(document.getElementById('ssid').value,document.getElementById('pass').value)"> Confirm</button>
+
+    </form>
+      
+      <p>&nbsp;</p>
+      (At least 8 characters)
+      <p>&nbsp;</p>
+      <p id="success" style="visibility:hidden" >SUCCESS</p>
+      <p>&nbsp;</p>
+
+  
+    
+    
+     <div class=""></div>
+    </section>
+  
+     
+     <script>
+
+      function send_wifi(ssid,pass) {
+   
+         var ssid_check = document.getElementById("ssid").value;
+         var pass_check = document.getElementById("pass").value;
+
+        
+         if (ssid_check.length>=8 && pass_check >=8)
+         {
+           document.getElementById("success").style.visibility = "visible";
+           document.getElementById("success").innerHTML = "SUCCESS!!"
+             console.log(" here")
+             
+              const json = {
+                  ssid: ssid,
+                  pass: pass,
+            };
+ 
+            fetch("/wifi_information", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(json),
+            });
+
+        }else
+        {
+
+        	document.getElementById("success").innerHTML= "FAIL"
+        	document.getElementById("success").style.visibility = "visible";
+        	document.getElementById("success").style.color = "red";
+
+        }
+      }
+
+
+
+   
+  </script>
+    
+  
+
+<!-- partial -->
+
+
+</body>
+</html>
